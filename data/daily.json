@@ -1,0 +1,121 @@
+[
+  {
+    "model": "cony",
+    "process": "3",
+    "finish": "5",
+    "total": "8",
+    "date": "2025-06-14"
+  },
+  {
+    "model": "boda",
+    "process": "2",
+    "finish": "6",
+    "total": "8",
+    "date": "2025-05-15"
+  },
+  {
+    "model": "abc",
+    "process": "4",
+    "finish": "4",
+    "total": "8",
+    "date": "2025-06-16"
+  },
+  {
+    "model": "xyz",
+    "process": "5",
+    "finish": "2",
+    "total": "7",
+    "date": "2025-06-17"
+  },
+  {
+    "model": "cola",
+    "process": "1",
+    "finish": "6",
+    "total": "7",
+    "date": "2025-07-18"
+  },
+  {
+    "model": "bola",
+    "process": "3",
+    "finish": "4",
+    "total": "7",
+    "date": "2025-06-19"
+  },
+  {
+    "model": "nvda",
+    "process": "6",
+    "finish": "2",
+    "total": "8",
+    "date": "2025-11-20"
+  },
+  {
+    "model": "Nokia",
+    "process": "2",
+    "finish": "5",
+    "total": "7",
+    "date": "2025-06-21"
+  },
+  {
+    "model": "ss",
+    "process": "2",
+    "finish": "5",
+    "total": "7",
+    "date": "2025-06-21"
+  },
+  {
+    "model": "Norrkia",
+    "process": "2",
+    "finish": "5",
+    "total": "7",
+    "date": "2025-06-21"
+  },
+  {
+    "model": "mm",
+    "process": "3",
+    "finish": "3",
+    "total": "6",
+    "date": "2025-06-22"
+  },
+  {
+    "model": "X",
+    "process": "4",
+    "finish": "4",
+    "total": "8",
+    "date": "2025-06-23"
+  },
+  {
+    "model": "A",
+    "process": "5",
+    "finish": "1",
+    "total": "6",
+    "date": "2025-06-24"
+  },
+  {
+    "model": "O",
+    "process": "2",
+    "finish": "6",
+    "total": "8",
+    "date": "2025-06-25"
+  },
+  {
+    "model": "Wifi",
+    "process": "3",
+    "finish": "5",
+    "total": "8",
+    "date": "2025-05-26"
+  },
+  {
+    "model": "s",
+    "process": "4",
+    "finish": "3",
+    "total": "7",
+    "date": "2025-06-27"
+  },
+  {
+    "model": "G",
+    "process": "1",
+    "finish": "7",
+    "total": "8",
+    "date": "2025-11-28"
+  }
+]

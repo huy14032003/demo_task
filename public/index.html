@@ -8,11 +8,17 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <style>
     :root {
       --background_body: rgba(22, 28, 46, 0.701);
+      --background_popup: rgb(22, 28, 46);
       --background_card: rgba(38, 50, 81, 0.853);
     }
     * {
@@ -35,6 +41,7 @@
       background-repeat: no-repeat; /* ✅ Không lặp lại */
       background-color: var(--background_body);
       background-blend-mode: darken;
+      background-attachment: fixed;
     }
     .box1 {
       display: flex;
@@ -49,20 +56,35 @@
       max-height: 230px;
       margin-top: 23px;
     }
-     .box5 
-     {
-      display:grid;
+    .box5 {
+      display: grid;
       grid-template-columns: 1fr 2fr;
-     }
-    .box5 #box5
-    {
+    }
+    .box5 #box5 {
       max-width: 230px;
       max-height: 230px;
       margin-top: 25px;
     }
-
+    .modal-content {
+      background-color: var(--background_popup);
+      color: #fff;
+    }
+    .modal-header {
+      border: none;
+    }
+    .modal-dialog 
+    {
+      max-width: 1300px;
+    }
   </style>
   <body>
+    <div class="nav">
+      <input type="text" value="" id="todayDate" />
+      <select name="select-time" id="select-time">
+        <option value="date" selected>Ngày</option>
+        <option value="month">Tuần</option>
+      </select>
+    </div>
     <div class="container-data">
       <div class="row gx-3 ms-1 me-1">
         <div class="col-sm-4">
@@ -113,337 +135,275 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="modal fade"
+      id="detailModal"
+      tabindex="-1"
+      aria-labelledby="detailModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog ">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="detailModalLabel">Chi tiết</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalBody">Đang tải dữ liệu...</div>
+        </div>
+      </div>
+    </div>
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
-      // fetch("/api/charts")
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     const labels = data.map((d) => d.label);
-      //     const values = data.map((d) => d.value);
+      const ui = {
+        inputDate: document.querySelector("#todayDate"),
+        selectTime: document.querySelector("#select-time"),
+      };
+      let fromDate = "";
+      let toDate = "";
+      let originData = [];
+      let groupDate = [];
+      let groupProcess = [];
+      let groupFinish = [];
+      let groupTotal = [];
+      const year = new Date().getFullYear();
+      function renderDetails(data) {
+        Highcharts.chart("modalBody", {
+          chart: {
+            type: "column",
+            backgroundColor: "transparent", // ✅ Xoá nền chính của chart
+            plotBackgroundColor: "transparent", // ✅ Xoá nền vùng vẽ biểu đồ (plot)
+            plotBorderWidth: 0, // ✅ Không viền khung plot
+            plotShadow: false
+          },
+          title: {
+            text: "Chi tiết theo ngày",
+            align: "left",
+            style: {
+              color: "#ffffff",
+              fontSize: "16px",
+              fontWeight: "bold",
+            },
+          },
+          xAxis: {
+            categories: data.map((item) => item.date),
+            lineColor: "#ffffff",
+            labels: { style: { color: "white" } },
+          },
+          yAxis: {
+             gridLineWidth: 0,
+            allowDecimals: false,
+            min: 0,
+            title: {
+              text: "Total",
+              style:{
+                color: "#ffffff",
+              }
+            },
+            lineColor: "#ffffff",
+            labels: { style: { color: "white" } },
+          },
+          // tooltip: {
+          //   pointFormat:
+          //     "<span style='color:{series.color}'>{series.name}</span>: <b>{point.y}</b><br/>" +
+          //     "Total: <b>{point.stackTotal}</b><br/>",
+          //   shared: true,
+          // },
+           legend: {
+            itemStyle: { color: "white" },
+            symbolRadius: 3, // ✅ Đổi biểu tượng từ tròn → vuông
+            symbolHeight: 10, // ✅ Kích thước biểu tượng
+            symbolWidth: 30, // ✅ Kích thước biểu tượng
+            symbolPadding: 5, // ✅ Giảm khoảng cách giữa biểu tượng và chữ
+            itemMarginBottom: 0,
+          },
+         tooltip: {
+  shared: true,
+  backgroundColor: "#2c3e50",
+  style: { color: "#ffffff" },
+  formatter: function () {
+    const index = this.points[0].point.index;
+    const model = data[index].model;
+    let content = `<b>Model: ${model}</b><br/>`;
+    this.points.forEach((p) => {
+      content += `<span style="color:${p.color}">\u25CF</span> ${p.series.name}: <b>${p.y}</b><br/>`;
+    });
+    return content;
+  },
+},
+          plotOptions: {
+            column: {
+              stacking: "normal",
+            },
+          },
+          series: [
+            {
+              name: "Process",
+              data: data.map((item) => Number(item.process)),
+              stack: "total",
+            },
+            {
+              name: "Finish",
+              data: data.map((item) => Number(item.finish)),
+              stack: "total",
+            },
+          ],
+           credits: { enabled: false },
+        });
+      }
+      function handleChooseTime() {}
+      flatpickr("#todayDate", {
+        dateFormat: "Y-m-d", // Hiển thị yyyy-mm-dd
+        defaultDate: "today", // Gán ngày hôm nay mặc định
+        allowInput: true, // Cho phép sửa bằng tay
+      });
+      async function getApi() {
+        const res = await fetch(
+          `http://localhost:3000/api/charts/month?fromDate=${year}-01&toDate=${year}-12`
+        );
+        const data = await res.json();
+        originData = data;
+      }
 
-      Highcharts.chart("chart-1", {
-        chart: {
-          type: "pie",
-          backgroundColor: "transparent",
-        },
-        title: {
-          text: null,
-        },
-        subtitle: {
-          verticalAlign: "middle",
-          text: "Totle<br>71",
-          align: "center",
-          y: 20,
-          style: {
-            color: "#ffffff",
-            fontSize: "16px",
-            fontWeight: "bold",
+      function getData() {
+        groupDate = originData.map((item) => item.month);
+        groupProcess = originData.map((item) => item.total_process);
+        groupFinish = originData.map((item) => item.total_finish);
+        groupTotal = originData.map((item) => item.total);
+      }
+      async function init() {
+        await getApi();
+        getData();
+        renderChart();
+      }
+      init();
+      function renderChart() {
+        Highcharts.chart("box2", {
+          chart: {
+            backgroundColor: "transparent", // ✅ Xoá nền chính của chart
+            plotBackgroundColor: "transparent", // ✅ Xoá nền vùng vẽ biểu đồ (plot)
+            plotBorderWidth: 0, // ✅ Không viền khung plot
+            plotShadow: false,
+            //   marginBottom: 60,
           },
-        },
-        tooltip: {
-          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-        },
-        plotOptions: {
-          //  borderWidth: 0,
-          series: {
-            borderRadius: 10,
-            borderWidth: 0,
-            colorByPoint: true,
-          },
-          pie: {
-            shadow: false,
-            center: ["50%", "50%"],
-            dataLabels: {
-              enabled: true,
-              format: "{point.name}",
-              color: "white",
-            },
-          },
-        },
-        series: [
-          {
-            borderRadius: 10,
-            name: "finish",
-            size: "100%",
-            innerSize: "80%",
-            data: [
-              { name: "", y: 70, color: "#00ff88" }, // Phần bạn muốn hiện
-              { name: "", y: 30, color: "rgb(81, 100, 135)" }, // Phần còn lại làm mờ
-            ],
-            dataLabels: {
-              distance: -30,
-            },
-          },
-          {
-            name: "process",
-            size: "70%",
-            innerSize: "70%",
-            data: [
-              { name: "", y: 30, color: "#3498db" },
-              { name: "", y: 70, color: "rgb(81, 100, 135)" },
-            ],
-            dataLabels: {
-              distance: -20,
-            },
-          },
-        ],
-        credits: { enabled: false },
-      });
- Highcharts.chart("box2", {
-    chart: {
-      backgroundColor: "transparent", // ✅ Xoá nền chính của chart
-      plotBackgroundColor: "transparent", // ✅ Xoá nền vùng vẽ biểu đồ (plot)
-      plotBorderWidth: 0, // ✅ Không viền khung plot
-      plotShadow: false,
-      //   marginBottom: 60,
-    },
-    title: {
-      text: "Biểu đồ tiến độ xử lý", // hoặc bất kỳ nội dung nào
-      align: "left",
-      style: {
-        color: "#ffffff",
-        fontSize: "16px",
-        fontWeight: "bold",
-      },
-      margin: 20, // khoảng cách với chart bên dưới
-    },
-    xAxis: {
-      categories: [
-        "2025-07-08",
-        "2025-07-09",
-        "2025-07-10",
-        "2025-07-11",
-        "2025-07-12",
-        "2025-07-13",
-        "2025-07-14",
-      ],
-      lineColor: "#ffffff",
-      labels: { style: { color: "white" } },
-      //   crosshair: true,
-    },
-    yAxis: [
-      {
-        // Cột trái
-        gridLineWidth: 0,
-        min: 0,
-        title: { text: null },
-        labels: { style: { color: "white" } },
-      },
-      {
-        // Cột phải
-        gridLineWidth: 0,
-        title: { text: null },
-        labels: {
-          format: "{value} %",
-          style: { color: "white" },
-        },
-        opposite: true,
-      },
-    ],
-    legend: {
-      itemStyle: { color: "white" },
-      symbolRadius: 3, // ✅ Đổi biểu tượng từ tròn → vuông
-      symbolHeight: 10, // ✅ Kích thước biểu tượng
-      symbolWidth: 10, // ✅ Kích thước biểu tượng
-      symbolPadding: 5, // ✅ Giảm khoảng cách giữa biểu tượng và chữ
-      itemMarginBottom: 0,
-    },
-    tooltip: {
-      shared: true,
-      backgroundColor: "#2c3e50",
-      style: { color: "#ffffff" },
-    },
-    credits: { enabled: false },
-    plotOptions: {
-      column: {
-        borderWidth: 0,
-        states: {
-          hover: {
-            enabled: true,
-            borderWidth: 1, // ✅ Làm sáng cột khi hover
-          },
-        },
-      },
-    },
-    series: [
-      {
-        name: "Process",
-        type: "column",
-        data: [5, 8, 4, 7, 6, 3, 1],
-        color: "#2196F3", // xanh dương
-      },
-      {
-        name: "Finish",
-        type: "column",
-        data: [60, 68, 59, 65, 63, 55, 20],
-        color: "#66ff66", // xanh lá
-      },
-      {
-        name: "Finish Percentage",
-        type: "spline",
-        yAxis: 1,
-        data: [90, 85, 80, 95, 90, 88, 70],
-        color: "#FFD700", // vàng
-      },
-      {
-        name: "Total Process",
-        type: "spline",
-        yAxis: 1,
-        data: [65, 76, 63, 72, 69, 58, 21],
-        color: "#FF4C4C", // đỏ
-      },
-    ],
-  });
-      Highcharts.chart("box3", {
-        chart: {
-          type: "column",
-          backgroundColor: "transparent",
-          plotBackgroundColor: "transparent",
-          plotBorderWidth: 0,
-          plotShadow: false,
-        },
-        title: {
-          text: "Biểu đồ 3",
-          align: "left",
-          style: {
-            color: "#ffffff",
-            fontSize: "16px",
-            fontWeight: "bold",
-          },
-          margin: 20,
-        },
-        xAxis: {
-          categories: ["Tháng 1", "Tháng 2", "Tháng 3"], // ✅ Dữ liệu tĩnh trục X
-          crosshair: true,
-          lineColor: "#ffffff",
-          labels: { style: { color: "white" } },
-        },
-        yAxis: {
-          gridLineWidth: 0,
-          min: 0,
-          tickPositions: [0, 10, 20, 30, 40],
-          labels: { style: { color: "white" } },
           title: {
-            text: null,
+            text: "Biểu đồ tiến độ xử lý", // hoặc bất kỳ nội dung nào
+            align: "left",
+            style: {
+              color: "#ffffff",
+              fontSize: "16px",
+              fontWeight: "bold",
+            },
+            margin: 20, // khoảng cách với chart bên dưới
           },
-        },
-        series: [
-          {
-            name: "Dữ liệu",
-            color: "#00ff88",
-            data: [12, 28, 35], // ✅ Dữ liệu tĩnh
+          xAxis: {
+            categories: groupDate,
+            lineColor: "#ffffff",
+            labels: { style: { color: "white" } },
+            //   crosshair: true,
           },
-        ],
-        credits: { enabled: false },
-      });
-      Highcharts.chart("box4", {
-        chart: {
-          type: "column",
-          backgroundColor: "transparent",
-          plotBackgroundColor: "transparent",
-          plotBorderWidth: 0,
-          plotShadow: false,
-        },
-        title: {
-          text: "Biểu đồ 3",
-          align: "left",
-          style: {
-            color: "#ffffff",
-            fontSize: "16px",
-            fontWeight: "bold",
+          yAxis: [
+            {
+              // Cột trái
+              gridLineWidth: 0,
+              min: 0,
+              title: { text: null },
+              labels: { style: { color: "white" } },
+            },
+            {
+              // Cột phải
+              gridLineWidth: 0,
+              title: { text: null },
+              labels: {
+                format: "{value} ",
+                style: { color: "white" },
+              },
+              opposite: true,
+            },
+          ],
+          legend: {
+            itemStyle: { color: "white" },
+            symbolRadius: 3, // ✅ Đổi biểu tượng từ tròn → vuông
+            symbolHeight: 10, // ✅ Kích thước biểu tượng
+            symbolWidth: 10, // ✅ Kích thước biểu tượng
+            symbolPadding: 5, // ✅ Giảm khoảng cách giữa biểu tượng và chữ
+            itemMarginBottom: 0,
           },
-          margin: 20,
-        },
-        xAxis: {
-          categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"], // ✅ Dữ liệu tĩnh trục X
-          crosshair: true,
-          lineColor: "#ffffff",
-          labels: { style: { color: "white" } },
-        },
-        yAxis: {
-          gridLineWidth: 0,
-          min: 0,
-          tickPositions: [0, 10, 20, 30, 40],
-          labels: { style: { color: "white" } },
-          title: {
-            text: null,
+          tooltip: {
+            shared: true,
+            backgroundColor: "#2c3e50",
+            style: { color: "#ffffff" },
           },
-        },
-        series: [
-          {
-            name: "Dữ liệu",
-            color: "#00ff88",
-            data: [12, 28, 35,1,5,15,33,25, ], // ✅ Dữ liệu tĩnh
-          },
-        ],
-        credits: { enabled: false },
-      });
-  Highcharts.chart("box5", {
-        chart: {
-          type: "pie",
-          backgroundColor: "transparent",
-        },
-        title: {
-          text: "Level",
-          style:{
-            color:"#fff",
-            fontSize: "16px",
-            fontWeight: "bold",
-          },
-          align:"left",
-        },
-        subtitle: {
-          verticalAlign: "middle",
-          text: "Totle<br>71",
-          align: "center",
-          y: 50,
-          style: {
-            color: "#ffffff",
-            fontSize: "16px",
-            fontWeight: "bold",
-          },
-        },
-        tooltip: {
-          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-        },
-        plotOptions: {
-          //  borderWidth: 0,
-          series: {
-            borderRadius: 10,
-            borderWidth: 0,
-            colorByPoint: true,
-          },
-          pie: {
-            shadow: false,
-            center: ["50%", "50%"],
-            dataLabels: {
-              enabled: true,
-              format: "{point.name}",
-              color: "white",
+          credits: { enabled: false },
+          plotOptions: {
+            column: {
+              point: {
+                events: {
+                  click: function () {
+                    const month = this.category;
+                    console.log(month);
+                    // Lấy modal
+                    const myModal = new bootstrap.Modal(
+                      document.getElementById("detailModal")
+                    );
+                    document.getElementById("modalBody").innerHTML =
+                      "Đang tải dữ liệu...";
+                    document.getElementById(
+                      "detailModalLabel"
+                    ).textContent = `Chi tiết:  ${month}`;
+
+                    async function getApidate() {
+                      const res = await fetch(
+                        `http://localhost:3000/api/charts/daily?fromDate=${month}-01&toDate=${month}-30`
+                      );
+                      const data = await res.json();
+
+                      document.getElementById("modalBody").innerHTML = "";
+
+                      renderDetails(data);
+
+                      console.log(data.map((item) => item.finish));
+                    }
+
+                    getApidate();
+                    // Hiện modal
+                    myModal.show();
+                  },
+                },
+              },
             },
           },
-        },
-        series: [
-          {
-            borderRadius: 0,
-            name: "finish",
-            size: "100%",
-            innerSize: "80%",
-            data: [
-              { name: "", y: 70, color: "#00ff88" }, // Phần bạn muốn hiện
-              { name: "", y: 30, color: "rgb(81, 100, 135)" }, // Phần còn lại làm mờ
-            ],
-            dataLabels: {
-              distance: -30,
+          series: [
+            {
+              name: "Process",
+              type: "column",
+              data: groupProcess,
+              color: "#2196F3", // xanh dương
             },
-          },
-         
-        ],
-        credits: { enabled: false },
-      });
-      // })
-      // .catch((error) => console.error("Lỗi khi tải dữ liệu:", error));
+            {
+              name: "Finish",
+              type: "column",
+              data: groupFinish,
+              color: "#66ff66", // xanh lá
+            },
+            {
+              name: "Total",
+              type: "spline",
+              yAxis: 1,
+              data: groupTotal,
+              color: "#FFD700", // vàng
+            },
+          ],
+        });
+      }
+
+    
     </script>
   </body>
 </html>

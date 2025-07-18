@@ -1,0 +1,26 @@
+[
+  {
+    "month": "2025-05-21",
+    "total_process": 4,
+    "total_finish": 11,
+    "total": 15
+  },
+  {
+    "month": "2025-06-12",
+    "total_process": 39,
+    "total_finish": 49,
+    "total": 88
+  },
+  {
+    "month": "2025-07-16",
+    "total_process": 1,
+    "total_finish": 6,
+    "total": 7
+  },
+  {
+    "month": "2025-11-11",
+    "total_process": 7,
+    "total_finish": 9,
+    "total": 16
+  }
+]
