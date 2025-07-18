@@ -1,0 +1,24 @@
+{
+  "name": "demotask",
+  "version": "1.0.0",
+  "main": "chart.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huy14032003/demo_task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huy14032003/demo_task/issues"
+  },
+  "homepage": "https://github.com/huy14032003/demo_task#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
