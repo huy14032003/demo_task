@@ -75,6 +75,24 @@
     .modal-dialog {
       max-width: 1300px;
     }
+    table {
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      table-layout: fixed; /* Phân chia đều cột */
+      border-collapse: collapse;
+    }
+    th {
+      border: 1px solid #ccc;
+      background-color: rgb(1, 10, 58);
+    }
+    td {
+      padding: 8px;
+      border: 1px solid #ccc;
+    }
+    tr:nth-child(even) {
+      background-color: #ffffff24;
+    }
   </style>
   <body>
     <div class="nav">
@@ -130,7 +148,21 @@
       </div>
       <div class="row gx-3 mt-3 ms-1 me-1">
         <div class="col-sm-12">
-          <div class="box" id="box7">Ô 3: Level</div>
+          <div class="box" id="box7">
+            <button class="admin">admin</button>
+            <button class="user">user</button>
+            <table>
+              <thead>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>e</th>
+                <th>f</th>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -163,6 +195,9 @@
       const ui = {
         inputDate: document.querySelector("#todayDate"),
         selectTime: document.querySelector("#select-time"),
+        tbody: document.querySelector("tbody"),
+        btn_admin: document.querySelector(".admin"),
+        btn_user: document.querySelector(".user"),
       };
       const date = new Date().toISOString().split("T")[0];
       let fromDate = date;
@@ -174,7 +209,67 @@
       let groupTotal = [];
 
       const year = new Date().getFullYear();
-
+      const role = JSON.parse(localStorage.getItem("role"));
+      function renderTacbleForAdmin() {
+        ui.tbody.innerHTML = "";
+        ui.tbody.innerHTML = `
+           <tr>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                  <td>6</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>8</td>
+                  <td>9</td>
+                  <td>10</td>
+                  <td>11</td>
+                  <td>12</td>
+                </tr>
+          `;
+      }
+      function renderTacbleForUser() {
+         ui.tbody.innerHTML = "";
+          ui.tbody.innerHTML = `
+           <tr>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                  <td>x</td>
+                </tr>
+          `;
+      }
+      function renderTable() {
+        if (role === "admin") {
+          ui.btn_admin.style.display='inline-block'
+          ui.btn_user.style.display='inline-block'
+          renderTacbleForAdmin();
+        } else if (role === "user") {
+           ui.btn_admin.style.display='none'
+          ui.btn_user.style.display='none'
+         renderTacbleForUser();
+        } else {
+          ui.tbody.innerHTML = "";
+          ui.tbody.innerHTML = `
+          <tr>
+            no Data
+          </tr>
+          `;
+        }
+      }
       function handleGetDate() {
         const input = ui.inputDate.value;
 
@@ -187,11 +282,12 @@
           toDate = newDate.toISOString().split("T")[0];
         }
         getApi();
-       
       }
       function eventListener() {
-        ui.inputDate.addEventListener("change",  handleGetDate);
+        ui.inputDate.addEventListener("change", handleGetDate);
         ui.selectTime.addEventListener("change", handleGetDate);
+        ui.btn_admin.addEventListener('click',renderTacbleForAdmin);
+        ui.btn_user.addEventListener('click',renderTacbleForUser)
       }
       function renderDetails(data) {
         Highcharts.chart("modalBody", {
@@ -290,6 +386,7 @@
         originData = data;
         getData();
         renderChart();
+        renderTable();
         console.log("FETCHING WITH:", fromDate, toDate);
       }
 
@@ -301,7 +398,7 @@
       }
       async function init() {
         await getApi();
-        
+
         eventListener();
       }
       init();
