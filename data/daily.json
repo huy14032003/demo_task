@@ -1,121 +1,104 @@
 [
   {
-    "model": "cony",
-    "process": "3",
-    "finish": "5",
-    "total": "8",
-    "date": "2025-06-14"
+    "date": "2023-02-02",
+    "total_process": 1,
+    "total_finish": 4,
+    "total": 5
   },
   {
-    "model": "boda",
-    "process": "2",
-    "finish": "6",
-    "total": "8",
-    "date": "2025-05-15"
+    "date": "2023-03-03",
+    "total_process": 3,
+    "total_finish": 2,
+    "total": 5
   },
   {
-    "model": "abc",
-    "process": "4",
-    "finish": "4",
-    "total": "8",
-    "date": "2025-06-16"
+    "date": "2023-04-04",
+    "total_process": 1,
+    "total_finish": 1,
+    "total": 2
   },
   {
-    "model": "xyz",
-    "process": "5",
-    "finish": "2",
-    "total": "7",
-    "date": "2025-06-17"
+    "date": "2023-09-09",
+    "total_process": 1,
+    "total_finish": 1,
+    "total": 2
   },
   {
-    "model": "cola",
-    "process": "1",
-    "finish": "6",
-    "total": "7",
-    "date": "2025-07-18"
+    "date": "2023-10-10",
+    "total_process": 5,
+    "total_finish": 6,
+    "total": 11
   },
   {
-    "model": "bola",
-    "process": "3",
-    "finish": "4",
-    "total": "7",
-    "date": "2025-06-19"
+    "date": "2023-11-11",
+    "total_process": 3,
+    "total_finish": 5,
+    "total": 8
   },
   {
-    "model": "nvda",
-    "process": "6",
-    "finish": "2",
-    "total": "8",
-    "date": "2025-11-20"
+    "date": "2023-12-12",
+    "total_process": 3,
+    "total_finish": 6,
+    "total": 9
   },
   {
-    "model": "Nokia",
-    "process": "2",
-    "finish": "5",
-    "total": "7",
-    "date": "2025-06-21"
+    "date": "2024-02-14",
+    "total_process": 3,
+    "total_finish": 5,
+    "total": 8
   },
   {
-    "model": "ss",
-    "process": "2",
-    "finish": "5",
-    "total": "7",
-    "date": "2025-06-21"
+    "date": "2024-03-15",
+    "total_process": 4,
+    "total_finish": 5,
+    "total": 9
   },
   {
-    "model": "Norrkia",
-    "process": "2",
-    "finish": "5",
-    "total": "7",
-    "date": "2025-06-21"
+    "date": "2024-04-16",
+    "total_process": 4,
+    "total_finish": 2,
+    "total": 6
   },
   {
-    "model": "mm",
-    "process": "3",
-    "finish": "3",
-    "total": "6",
-    "date": "2025-06-22"
+    "date": "2024-05-17",
+    "total_process": 4,
+    "total_finish": 5,
+    "total": 9
   },
   {
-    "model": "X",
-    "process": "4",
-    "finish": "4",
-    "total": "8",
-    "date": "2025-06-23"
+    "date": "2024-06-18",
+    "total_process": 5,
+    "total_finish": 2,
+    "total": 7
   },
   {
-    "model": "A",
-    "process": "5",
-    "finish": "1",
-    "total": "6",
-    "date": "2025-06-24"
+    "date": "2024-07-19",
+    "total_process": 4,
+    "total_finish": 4,
+    "total": 8
   },
   {
-    "model": "O",
-    "process": "2",
-    "finish": "6",
-    "total": "8",
-    "date": "2025-06-25"
+    "date": "2025-07-20",
+    "total_process": 11,
+    "total_finish": 21,
+    "total": 32
   },
   {
-    "model": "Wifi",
-    "process": "3",
-    "finish": "5",
-    "total": "8",
-    "date": "2025-05-26"
+    "date": "2025-07-19",
+    "total_process": 11,
+    "total_finish": 21,
+    "total": 32
   },
   {
-    "model": "s",
-    "process": "4",
-    "finish": "3",
-    "total": "7",
-    "date": "2025-06-27"
+    "date": "2025-07-13",
+    "total_process": 11,
+    "total_finish": 21,
+    "total": 32
   },
   {
-    "model": "G",
-    "process": "1",
-    "finish": "7",
-    "total": "8",
-    "date": "2025-11-28"
+    "date": "2025-07-15",
+    "total_process": 11,
+    "total_finish": 21,
+    "total": 32
   }
 ]

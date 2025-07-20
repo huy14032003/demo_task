@@ -72,14 +72,13 @@
     .modal-header {
       border: none;
     }
-    .modal-dialog 
-    {
+    .modal-dialog {
       max-width: 1300px;
     }
   </style>
   <body>
     <div class="nav">
-      <input type="text" value="" id="todayDate" />
+      <input type="text" id="todayDate" />
       <select name="select-time" id="select-time">
         <option value="date" selected>Ngày</option>
         <option value="month">Tuần</option>
@@ -143,7 +142,7 @@
       aria-labelledby="detailModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog ">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="detailModalLabel">Chi tiết</h5>
@@ -165,14 +164,35 @@
         inputDate: document.querySelector("#todayDate"),
         selectTime: document.querySelector("#select-time"),
       };
-      let fromDate = "";
-      let toDate = "";
+      const date = new Date().toISOString().split("T")[0];
+      let fromDate = date;
+      let toDate = fromDate;
       let originData = [];
       let groupDate = [];
       let groupProcess = [];
       let groupFinish = [];
       let groupTotal = [];
+
       const year = new Date().getFullYear();
+
+      function handleGetDate() {
+        const input = ui.inputDate.value;
+
+        if (ui.selectTime.value === "date") {
+          fromDate = toDate = input;
+        } else {
+          fromDate = input;
+          let newDate = new Date(fromDate);
+          newDate.setDate(newDate.getDate() + 30);
+          toDate = newDate.toISOString().split("T")[0];
+        }
+        getApi();
+       
+      }
+      function eventListener() {
+        ui.inputDate.addEventListener("change",  handleGetDate);
+        ui.selectTime.addEventListener("change", handleGetDate);
+      }
       function renderDetails(data) {
         Highcharts.chart("modalBody", {
           chart: {
@@ -180,7 +200,7 @@
             backgroundColor: "transparent", // ✅ Xoá nền chính của chart
             plotBackgroundColor: "transparent", // ✅ Xoá nền vùng vẽ biểu đồ (plot)
             plotBorderWidth: 0, // ✅ Không viền khung plot
-            plotShadow: false
+            plotShadow: false,
           },
           title: {
             text: "Chi tiết theo ngày",
@@ -192,19 +212,19 @@
             },
           },
           xAxis: {
-            categories: data.map((item) => item.date),
+            categories: data.map((item) => item.model),
             lineColor: "#ffffff",
             labels: { style: { color: "white" } },
           },
           yAxis: {
-             gridLineWidth: 0,
+            gridLineWidth: 0,
             allowDecimals: false,
             min: 0,
             title: {
               text: "Total",
-              style:{
+              style: {
                 color: "#ffffff",
-              }
+              },
             },
             lineColor: "#ffffff",
             labels: { style: { color: "white" } },
@@ -215,7 +235,7 @@
           //     "Total: <b>{point.stackTotal}</b><br/>",
           //   shared: true,
           // },
-           legend: {
+          legend: {
             itemStyle: { color: "white" },
             symbolRadius: 3, // ✅ Đổi biểu tượng từ tròn → vuông
             symbolHeight: 10, // ✅ Kích thước biểu tượng
@@ -223,20 +243,20 @@
             symbolPadding: 5, // ✅ Giảm khoảng cách giữa biểu tượng và chữ
             itemMarginBottom: 0,
           },
-         tooltip: {
-  shared: true,
-  backgroundColor: "#2c3e50",
-  style: { color: "#ffffff" },
-  formatter: function () {
-    const index = this.points[0].point.index;
-    const model = data[index].model;
-    let content = `<b>Model: ${model}</b><br/>`;
-    this.points.forEach((p) => {
-      content += `<span style="color:${p.color}">\u25CF</span> ${p.series.name}: <b>${p.y}</b><br/>`;
-    });
-    return content;
-  },
-},
+          tooltip: {
+            shared: true,
+            backgroundColor: "#2c3e50",
+            style: { color: "#ffffff" },
+            formatter: function () {
+              const index = this.points[0].point.index;
+              const model = data[index].model;
+              let content = `<b>Model: ${model}</b><br/>`;
+              this.points.forEach((p) => {
+                content += `<span style="color:${p.color}">\u25CF</span> ${p.series.name}: <b>${p.y}</b><br/>`;
+              });
+              return content;
+            },
+          },
           plotOptions: {
             column: {
               stacking: "normal",
@@ -254,10 +274,9 @@
               stack: "total",
             },
           ],
-           credits: { enabled: false },
+          credits: { enabled: false },
         });
       }
-      function handleChooseTime() {}
       flatpickr("#todayDate", {
         dateFormat: "Y-m-d", // Hiển thị yyyy-mm-dd
         defaultDate: "today", // Gán ngày hôm nay mặc định
@@ -265,22 +284,25 @@
       });
       async function getApi() {
         const res = await fetch(
-          `http://localhost:3000/api/charts/month?fromDate=${year}-01&toDate=${year}-12`
+          `http://localhost:3000/api/charts/daily?fromDate=${fromDate}&toDate=${toDate}`
         );
         const data = await res.json();
         originData = data;
+        getData();
+        renderChart();
+        console.log("FETCHING WITH:", fromDate, toDate);
       }
 
       function getData() {
-        groupDate = originData.map((item) => item.month);
+        groupDate = originData.map((item) => item.date);
         groupProcess = originData.map((item) => item.total_process);
         groupFinish = originData.map((item) => item.total_finish);
         groupTotal = originData.map((item) => item.total);
       }
       async function init() {
         await getApi();
-        getData();
-        renderChart();
+        
+        eventListener();
       }
       init();
       function renderChart() {
@@ -346,8 +368,8 @@
               point: {
                 events: {
                   click: function () {
-                    const month = this.category;
-                    console.log(month);
+                    const date = this.category;
+                    console.log(date);
                     // Lấy modal
                     const myModal = new bootstrap.Modal(
                       document.getElementById("detailModal")
@@ -356,11 +378,11 @@
                       "Đang tải dữ liệu...";
                     document.getElementById(
                       "detailModalLabel"
-                    ).textContent = `Chi tiết:  ${month}`;
+                    ).textContent = `Chi tiết:  ${date}`;
 
                     async function getApidate() {
                       const res = await fetch(
-                        `http://localhost:3000/api/charts/daily?fromDate=${month}-01&toDate=${month}-30`
+                        `http://localhost:3000/api/charts/detail?fromDate=${date}&toDate=${date}`
                       );
                       const data = await res.json();
 
@@ -402,8 +424,6 @@
           ],
         });
       }
-
-    
     </script>
   </body>
 </html>

@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2023-11-11",
+    "total_process": 6,
+    "total_finish": 5,
+    "total": 11
+  },
+  {
+    "date": "2025-07-20",
+    "total_process": 3,
+    "total_finish": 9,
+    "total": 12
+  },
+  {
+    "date": "2024-05-01",
+    "total_process": 4,
+    "total_finish": 9,
+    "total": 13
+  }
+]

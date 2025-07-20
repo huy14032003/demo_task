@@ -1,0 +1,352 @@
+[
+  {
+    "model": "model1",
+    "process": "1",
+    "finish": "4",
+    "total": "5",
+    "date": "2023-02-02"
+  },
+  {
+    "model": "model2",
+    "process": "3",
+    "finish": "2",
+    "total": "5",
+    "date": "2023-03-03"
+  },
+  {
+    "model": "model3",
+    "process": "1",
+    "finish": "1",
+    "total": "2",
+    "date": "2023-04-04"
+  },
+  {
+    "model": "model4",
+    "process": "5",
+    "finish": "3",
+    "total": "8",
+    "date": "2025-07-20"
+  },
+  {
+    "model": "model5",
+    "process": "5",
+    "finish": "2",
+    "total": "7",
+     "date": "2025-07-20"
+  },
+  {
+    "model": "model6",
+    "process": "1",
+    "finish": "6",
+    "total": "7",
+    "date": "2025-07-20"
+  },
+  {
+    "model": "model7",
+    "process": "2",
+    "finish": "3",
+    "total": "5",
+    "date": "2025-07-20"
+  },
+  {
+    "model": "model8",
+    "process": "1",
+    "finish": "1",
+    "total": "2",
+    "date": "2023-09-09"
+  },
+  {
+    "model": "model9",
+    "process": "5",
+    "finish": "6",
+    "total": "11",
+    "date": "2023-10-10"
+  },
+  {
+    "model": "model10",
+    "process": "3",
+    "finish": "5",
+    "total": "8",
+    "date": "2023-11-11"
+  },
+  {
+    "model": "model11",
+    "process": "3",
+    "finish": "6",
+    "total": "9",
+    "date": "2023-12-12"
+  },
+  {
+    "model": "model12",
+    "process": "5",
+    "finish": "5",
+    "total": "10",
+    "date": "2023-01-13"
+  },
+  {
+    "model": "model13",
+    "process": "3",
+    "finish": "5",
+    "total": "8",
+    "date": "2024-02-14"
+  },
+  {
+    "model": "model14",
+    "process": "4",
+    "finish": "5",
+    "total": "9",
+    "date": "2024-03-15"
+  },
+  {
+    "model": "model15",
+    "process": "4",
+    "finish": "2",
+    "total": "6",
+    "date": "2024-04-16"
+  },
+  {
+    "model": "model16",
+    "process": "4",
+    "finish": "5",
+    "total": "9",
+    "date": "2024-05-17"
+  },
+  {
+    "model": "model17",
+    "process": "5",
+    "finish": "2",
+    "total": "7",
+    "date": "2024-06-18"
+  },
+  {
+    "model": "model18",
+    "process": "4",
+    "finish": "4",
+    "total": "8",
+     "date": "2024-06-18"
+  },
+  {
+    "model": "model19",
+    "process": "4",
+    "finish": "6",
+    "total": "10",
+    "date": "2024-06-18"
+  },
+  {
+    "model": "model20",
+    "process": "6",
+    "finish": "5",
+    "total": "11",
+     "date": "2024-06-18"
+  },
+  {
+    "model": "model21",
+    "process": "2",
+    "finish": "3",
+    "total": "5",
+    "date": "2024-06-18"
+  },
+  {
+    "model": "model22",
+    "process": "5",
+    "finish": "3",
+    "total": "8",
+    "date": "2024-06-18"
+  },
+  {
+    "model": "model23",
+    "process": "6",
+    "finish": "1",
+    "total": "7",
+    "date": "2024-12-24"
+  },
+  {
+    "model": "model24",
+    "process": "2",
+    "finish": "6",
+    "total": "8",
+    "date": "2024-12-24"
+  },
+  {
+    "model": "model25",
+    "process": "4",
+    "finish": "4",
+    "total": "8",
+    "date": "2024-12-24"
+  },
+  {
+    "model": "model26",
+    "process": "5",
+    "finish": "5",
+    "total": "10",
+   "date": "2024-12-24"
+  },
+  {
+    "model": "model27",
+    "process": "4",
+    "finish": "3",
+    "total": "7",
+    "date": "2024-12-24"
+  },
+  {
+    "model": "model28",
+    "process": "2",
+    "finish": "4",
+    "total": "6",
+    "date": "2024-05-01"
+  },
+  {
+    "model": "model29",
+    "process": "2",
+    "finish": "1",
+    "total": "3",
+    "date": "2024-06-02"
+  },
+  {
+    "model": "model30",
+    "process": "3",
+    "finish": "5",
+    "total": "8",
+    "date": "2024-07-03"
+  },
+  {
+    "model": "model31",
+    "process": "1",
+    "finish": "4",
+    "total": "5",
+    "date": "2025-08-04"
+  },
+  {
+    "model": "model32",
+    "process": "3",
+    "finish": "2",
+    "total": "5",
+    "date": "2025-09-05"
+  },
+  {
+    "model": "model33",
+    "process": "1",
+    "finish": "3",
+    "total": "4",
+    "date": "2025-10-06"
+  },
+  {
+    "model": "model34",
+    "process": "1",
+    "finish": "3",
+    "total": "4",
+    "date": "2025-11-07"
+  },
+  {
+    "model": "model35",
+    "process": "2",
+    "finish": "2",
+    "total": "4",
+    "date": "2025-12-08"
+  },
+  {
+    "model": "model36",
+    "process": "1",
+    "finish": "1",
+    "total": "2",
+    "date": "2025-01-09"
+  },
+  {
+    "model": "model37",
+    "process": "6",
+    "finish": "5",
+    "total": "11",
+    "date": "2025-02-10"
+  },
+  {
+    "model": "model38",
+    "process": "5",
+    "finish": "2",
+    "total": "7",
+    "date": "2025-03-11"
+  },
+  {
+    "model": "model39",
+    "process": "5",
+    "finish": "2",
+    "total": "7",
+    "date": "2025-04-12"
+  },
+  {
+    "model": "model40",
+    "process": "5",
+    "finish": "3",
+    "total": "8",
+    "date": "2025-05-13"
+  },
+  {
+    "model": "model41",
+    "process": "1",
+    "finish": "4",
+    "total": "5",
+    "date": "2025-06-14"
+  },
+  {
+    "model": "model42",
+    "process": "3",
+    "finish": "5",
+    "total": "8",
+    "date": "2025-07-15"
+  },
+  {
+    "model": "model43",
+    "process": "4",
+    "finish": "6",
+    "total": "10",
+    "date": "2025-08-16"
+  },
+  {
+    "model": "model44",
+    "process": "5",
+    "finish": "5",
+    "total": "10",
+    "date": "2025-09-17"
+  },
+  {
+    "model": "model45",
+    "process": "4",
+    "finish": "5",
+    "total": "9",
+    "date": "2025-10-18"
+  },
+  {
+    "model": "model46",
+    "process": "4",
+    "finish": "2",
+    "total": "6",
+    "date": "2025-11-19"
+  },
+  {
+    "model": "model47",
+    "process": "5",
+    "finish": "1",
+    "total": "6",
+    "date": "2025-12-20"
+  },
+  {
+    "model": "model48",
+    "process": "6",
+    "finish": "6",
+    "total": "12",
+    "date": "2025-01-21"
+  },
+  {
+    "model": "model49",
+    "process": "2",
+    "finish": "5",
+    "total": "7",
+    "date": "2025-02-22"
+  },
+  {
+    "model": "model50",
+    "process": "1",
+    "finish": "4",
+    "total": "5",
+    "date": "2025-03-23"
+  }
+]
